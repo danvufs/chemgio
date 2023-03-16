@@ -94,7 +94,7 @@ export const AddPhotos: FC<Props> = ({ setImages, setImagesIdDb }) => {
   }
 
   return (
-    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+    <Box sx={{ display: { xs: 'block' } }}>
       <label htmlFor="upload-photo">
         <input
           type="file"

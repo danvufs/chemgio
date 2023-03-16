@@ -42,7 +42,7 @@ export const AddEmoji: FC<Props> = ({ setContent }) => {
     <Box
       onMouseOver={handleToggle}
       onMouseOut={handleToggle}
-      sx={{ display: { xs: 'none', sm: 'block' } }}
+      sx={{ display: { xs: 'block' } }}
     >
       <IconButton
         ref={anchorRef}

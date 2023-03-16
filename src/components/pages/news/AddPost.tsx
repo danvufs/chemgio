@@ -1,16 +1,19 @@
 import { FC, useState } from 'react'
-import { Box, IconButton, Stack } from '@mui/material'
+import { Box, IconButton, Stack} from '@mui/material'
 import { useAuth } from '../../providers/useAuth'
 import { BorderBox } from '../../ui/ThemeBox'
 import { doc, setDoc } from 'firebase/firestore'
 import { ThemeAvatar } from '../../ui/ThemeAvatar'
-import { ThemeTextFieldAddPost } from '../../ui/ThemeTextField'
+//import { ThemeTextFieldAddPost } from '../../ui/ThemeTextField'
 import { Link } from 'react-router-dom'
 import { AddPhotos } from './AddPhotos'
 import { useTranslation } from 'react-i18next'
 import { Clear, Send } from '@mui/icons-material'
 import { AddEmoji } from './AddEmoji'
 import { useAppSelector } from '../../../hooks/redux'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css' // Import the styles
+
 
 export const AddPost: FC = () => {
   const { t } = useTranslation(['news'])
@@ -25,8 +28,25 @@ export const AddPost: FC = () => {
     (state) => state.user
   )
 
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // Text formatting options
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }], // Lists
+      [{ 'script': 'sub'}, { 'script': 'super' }], // Subscript/superscript
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // Headers
+    ],
+  }
+  
+  const formats = [
+    'bold', 'italic', 'underline', 'strike',
+    'list', 'bullet',
+    'script', 'header',
+  ]
+  
+
   const handleAddPost = async (e: any) => {
-    if (e.key === 'Enter' && content.trim()) {
+    //if (e.key === 'Enter' && content.trim()) {
+      if (e.key === 'Enter' && e.shiftKey && content.trim()) {
       let charList =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
 
@@ -110,6 +130,7 @@ export const AddPost: FC = () => {
     setImages(newImagesArr)
   }
 
+
   return (
     <BorderBox sx={{ p: 3, mb: 2 }}>
       <Stack alignItems="center" direction="row">
@@ -118,7 +139,7 @@ export const AddPost: FC = () => {
             {emoji}
           </ThemeAvatar>
         </Link>
-        <ThemeTextFieldAddPost
+        {/* <ThemeTextFieldAddPost
           label={<b>{t('line1')}</b>}
           multiline
           fullWidth
@@ -127,7 +148,18 @@ export const AddPost: FC = () => {
           onChange={(e) => setContent(e.target.value)}
           onKeyPress={handleAddPost}
           sx={{ mx: 2 }}
-        />
+        /> */}
+        <ReactQuill
+  theme="snow"
+  value={content}
+  onChange={(value) => setContent(value)}
+  onKeyPress={handleAddPost}
+  modules={modules}
+  formats={formats}
+  placeholder={t('line1')??''}
+  style={{ flexGrow: 1, marginLeft: 16, marginRight: 16 }}
+/>
+
         <AddEmoji setContent={setContent} />
         <AddPhotos setImages={setImages} setImagesIdDb={setImagesIdDb} />
         <IconButton

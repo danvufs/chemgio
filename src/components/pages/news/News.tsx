@@ -360,19 +360,19 @@ export const News: FC = () => {
                           </Link>
                           {post.author.uid ===
                             'Y8kEZYAQAGa7VgaWhRBQZPKRmqw1' && (
-                            <Tooltip
-                              title={t('title3', { ns: ['other'] })}
-                              placement="top"
-                            >
-                              <TaskAlt
-                                color="info"
-                                sx={{
-                                  width: '20px ',
-                                  height: '20px',
-                                }}
-                              />
-                            </Tooltip>
-                          )}
+                              <Tooltip
+                                title={t('title3', { ns: ['other'] })}
+                                placement="top"
+                              >
+                                <TaskAlt
+                                  color="info"
+                                  sx={{
+                                    width: '20px ',
+                                    height: '20px',
+                                  }}
+                                />
+                              </Tooltip>
+                            )}
                         </Stack>
                         <Typography variant="body2" color="textSecondary">
                           {moment(post.createdAt).calendar()}
@@ -387,14 +387,20 @@ export const News: FC = () => {
                   </Stack>
                 )}
                 {editingId !== post.id &&
-                !deletedPosts.some((x) => x.id === post.id) ? (
+                  !deletedPosts.some((x) => x.id === post.id) ? (
                   <>
-                    <Typography
+                    {/* <Typography
                       variant="body1"
                       sx={{ ml: 1, wordBreak: 'break-word' }}
                     >
                       {post.content}
-                    </Typography>
+                    </Typography> */}
+                    <Typography
+                      variant="body1"
+                      sx={{ ml: 1, wordBreak: 'break-word' }}
+                      dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
+
                     {post?.images?.length === 3 || post?.images?.length > 4 ? (
                       <Stack
                         direction="row"
@@ -648,19 +654,19 @@ export const News: FC = () => {
                                 </Link>
                                 {comment.author.uid ===
                                   'Y8kEZYAQAGa7VgaWhRBQZPKRmqw1' && (
-                                  <Tooltip
-                                    title={t('title3', { ns: ['other'] })}
-                                    placement="top"
-                                  >
-                                    <TaskAlt
-                                      color="info"
-                                      sx={{
-                                        width: '20px ',
-                                        height: '20px',
-                                      }}
-                                    />
-                                  </Tooltip>
-                                )}
+                                    <Tooltip
+                                      title={t('title3', { ns: ['other'] })}
+                                      placement="top"
+                                    >
+                                      <TaskAlt
+                                        color="info"
+                                        sx={{
+                                          width: '20px ',
+                                          height: '20px',
+                                        }}
+                                      />
+                                    </Tooltip>
+                                  )}
                               </Stack>
                               {editingId !== comment.id ? (
                                 <Typography
@@ -686,7 +692,7 @@ export const News: FC = () => {
                                 {comment.author.uid === uid &&
                                   isVisible === comment.id &&
                                   Date.now() - +comment?.createdAt <
-                                    86400000 && (
+                                  86400000 && (
                                     <Typography
                                       variant="body2"
                                       color="textSecondary"
@@ -701,7 +707,7 @@ export const News: FC = () => {
                           </Stack>
                           <Stack justifyContent="space-between">
                             {comment.author.uid === uid &&
-                            isVisible === comment.id ? (
+                              isVisible === comment.id ? (
                               <IconButton
                                 onClick={() =>
                                   handleDeleteComment(post, comment.id)
@@ -721,119 +727,119 @@ export const News: FC = () => {
 
                             {(comment.likes.length > 0 ||
                               isVisible === comment.id) && (
-                              <Stack
-                                alignItems="center"
-                                direction="row"
-                                sx={{ width: '55px', mr: -2 }}
-                              >
-                                <ThemeTooltip
-                                  title={
-                                    comment.likes.length > 0 && (
-                                      <Stack alignItems="center">
-                                        <Typography
-                                          textAlign="center"
-                                          variant="body2"
-                                          sx={{ cursor: 'pointer' }}
-                                          onClick={() =>
-                                            handleOpenModalComments(
-                                              post.comments.find(
-                                                (x: IComment) =>
-                                                  x.id === comment.id
+                                <Stack
+                                  alignItems="center"
+                                  direction="row"
+                                  sx={{ width: '55px', mr: -2 }}
+                                >
+                                  <ThemeTooltip
+                                    title={
+                                      comment.likes.length > 0 && (
+                                        <Stack alignItems="center">
+                                          <Typography
+                                            textAlign="center"
+                                            variant="body2"
+                                            sx={{ cursor: 'pointer' }}
+                                            onClick={() =>
+                                              handleOpenModalComments(
+                                                post.comments.find(
+                                                  (x: IComment) =>
+                                                    x.id === comment.id
+                                                )
                                               )
-                                            )
-                                          }
-                                        >
-                                          {t('line10')}
-                                        </Typography>
-                                        <AvatarGroup
-                                          max={4}
-                                          spacing={12}
-                                          sx={{ cursor: 'pointer' }}
-                                          onClick={() =>
-                                            handleOpenModalComments(
-                                              post.comments.find(
-                                                (x: IComment) =>
-                                                  x.id === comment.id
+                                            }
+                                          >
+                                            {t('line10')}
+                                          </Typography>
+                                          <AvatarGroup
+                                            max={4}
+                                            spacing={12}
+                                            sx={{ cursor: 'pointer' }}
+                                            onClick={() =>
+                                              handleOpenModalComments(
+                                                post.comments.find(
+                                                  (x: IComment) =>
+                                                    x.id === comment.id
+                                                )
                                               )
-                                            )
-                                          }
-                                        >
-                                          {comment.likes.map((user) => (
-                                            <Link
-                                              to={`/profile/${user.uid}`}
-                                              key={user.uid}
-                                            >
-                                              <ThemeAvatar
-                                                alt={user.displayName}
-                                                src={
-                                                  users.find(
-                                                    (u) => u.uid === user.uid
-                                                  )?.photoURL
-                                                }
-                                                title={user.displayName}
-                                                sx={{
-                                                  width: '40px',
-                                                  height: '40px',
-                                                }}
+                                            }
+                                          >
+                                            {comment.likes.map((user) => (
+                                              <Link
+                                                to={`/profile/${user.uid}`}
+                                                key={user.uid}
                                               >
-                                                {user.emoji}
-                                              </ThemeAvatar>
-                                            </Link>
-                                          ))}
-                                        </AvatarGroup>
-                                      </Stack>
-                                    )
-                                  }
-                                  placement="top"
-                                >
-                                  {!comment.likes.some(
-                                    (user) => user.uid === uid
-                                  ) ? (
-                                    <IconButton
-                                      onClick={() =>
-                                        handleLikeComment(post, comment.id)
-                                      }
-                                      color="secondary"
-                                      sx={{
-                                        height: '40px',
-                                        width: '40px',
-                                        mb: -1,
-                                      }}
-                                    >
-                                      <FavoriteBorder
-                                        sx={{ height: '20px', width: '20px' }}
-                                      />
-                                    </IconButton>
-                                  ) : (
-                                    <IconButton
-                                      onClick={() =>
-                                        handleDislikeComment(post, comment.id)
-                                      }
-                                      color="error"
-                                      sx={{
-                                        height: '40px',
-                                        width: '40px',
-                                        mb: -1,
-                                      }}
-                                    >
-                                      <Favorite
-                                        sx={{ height: '20px', width: '20px' }}
-                                      />
-                                    </IconButton>
-                                  )}
-                                </ThemeTooltip>
-                                <Typography
-                                  variant="body1"
-                                  color="textSecondary"
-                                  sx={{ ml: -0.5, mb: -1 }}
-                                >
-                                  <b>
-                                    {comment.likes.length > 0 &&
-                                      comment.likes.length}
-                                  </b>
-                                </Typography>
-                              </Stack>
-                            )}
+                                                <ThemeAvatar
+                                                  alt={user.displayName}
+                                                  src={
+                                                    users.find(
+                                                      (u) => u.uid === user.uid
+                                                    )?.photoURL
+                                                  }
+                                                  title={user.displayName}
+                                                  sx={{
+                                                    width: '40px',
+                                                    height: '40px',
+                                                  }}
+                                                >
+                                                  {user.emoji}
+                                                </ThemeAvatar>
+                                              </Link>
+                                            ))}
+                                          </AvatarGroup>
+                                        </Stack>
+                                      )
+                                    }
+                                    placement="top"
+                                  >
+                                    {!comment.likes.some(
+                                      (user) => user.uid === uid
+                                    ) ? (
+                                      <IconButton
+                                        onClick={() =>
+                                          handleLikeComment(post, comment.id)
+                                        }
+                                        color="secondary"
+                                        sx={{
+                                          height: '40px',
+                                          width: '40px',
+                                          mb: -1,
+                                        }}
+                                      >
+                                        <FavoriteBorder
+                                          sx={{ height: '20px', width: '20px' }}
+                                        />
+                                      </IconButton>
+                                    ) : (
+                                      <IconButton
+                                        onClick={() =>
+                                          handleDislikeComment(post, comment.id)
+                                        }
+                                        color="error"
+                                        sx={{
+                                          height: '40px',
+                                          width: '40px',
+                                          mb: -1,
+                                        }}
+                                      >
+                                        <Favorite
+                                          sx={{ height: '20px', width: '20px' }}
+                                        />
+                                      </IconButton>
+                                    )}
+                                  </ThemeTooltip>
+                                  <Typography
+                                    variant="body1"
+                                    color="textSecondary"
+                                    sx={{ ml: -0.5, mb: -1 }}
+                                  >
+                                    <b>
+                                      {comment.likes.length > 0 &&
+                                        comment.likes.length}
+                                    </b>
+                                  </Typography>
+                                </Stack>
+                              )}
                           </Stack>
                         </Stack>
                       </Collapse>

@@ -66,7 +66,7 @@ const a11yProps = (index: number) => {
 
 export const Auth: FC = () => {
   const { t } = useTranslation(['auth'])
-  document.title = 'Seven'
+  document.title = 'Apple Drip'
 
   const { ga, db, gProvider, gitProvider, fProvider } = useAuth()
 
@@ -357,7 +357,7 @@ export const Auth: FC = () => {
       <Box display="flex" alignItems="center" justifyContent="center">
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/logo7.png`}
-          alt="Seven"
+          alt="Apple Drip"
           height="150px"
           width="150px"
           draggable={false}

@@ -224,7 +224,7 @@ export const Header: FC = () => {
                 >
                   <img
                     src="/assets/images/logo7.png"
-                    alt="Seven"
+                    alt="Apple Drip"
                     height="50px"
                     width="50px"
                     draggable={false}
