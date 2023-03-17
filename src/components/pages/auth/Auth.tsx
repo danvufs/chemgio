@@ -19,8 +19,8 @@ import { useAuth } from '../../providers/useAuth'
 import { IUserData } from '../../../types'
 import { doc, runTransaction, setDoc } from 'firebase/firestore'
 import {
-  Facebook,
-  GitHub,
+  //Facebook,
+  //GitHub,
   Google,
   Visibility,
   VisibilityOff,
@@ -68,7 +68,8 @@ export const Auth: FC = () => {
   const { t } = useTranslation(['auth'])
   document.title = 'Apple Drip'
 
-  const { ga, db, gProvider, gitProvider, fProvider } = useAuth()
+  const { ga, db, gProvider } = useAuth()
+  //const { ga, db, gProvider, gitProvider, fProvider } = useAuth()
 
   const [isRegForm, setIsRegForm] = useState(false)
   const [userData, setUserData] = useState<IUserData>({
@@ -229,117 +230,117 @@ export const Auth: FC = () => {
       })
   }
 
-  const handleGithubLogin = () => {
-    const random = Math.floor(Math.random() * emojis.length)
+  // const handleGithubLogin = () => {
+  //   const random = Math.floor(Math.random() * emojis.length)
 
-    signInWithPopup(ga, gitProvider)
-      .then(async (result) => {
-        // // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-        // const credential = GithubAuthProvider.credentialFromResult(result)
-        // const token = credential?.accessToken
-        // // The signed-in user info.
-        const user = result.user
-        const docRef = doc(db, 'users', user.uid)
+  //   signInWithPopup(ga, gitProvider)
+  //     .then(async (result) => {
+  //       // // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+  //       // const credential = GithubAuthProvider.credentialFromResult(result)
+  //       // const token = credential?.accessToken
+  //       // // The signed-in user info.
+  //       const user = result.user
+  //       const docRef = doc(db, 'users', user.uid)
 
-        try {
-          await runTransaction(db, async (transaction) => {
-            const sfDoc = await transaction.get(docRef)
+  //       try {
+  //         await runTransaction(db, async (transaction) => {
+  //           const sfDoc = await transaction.get(docRef)
 
-            if (!sfDoc.exists()) {
-              try {
-                await setDoc(docRef, {
-                  uid: user.uid,
-                  displayName: user.displayName,
-                  email: user.email,
-                  password: null,
-                  photoURL: user.photoURL,
-                  friends: [],
-                  groups: [],
-                  images: [],
-                  music: [],
-                  bookmarks: [],
-                  createdAt:
-                    user.metadata.creationTime &&
-                    +new Date(user.metadata.creationTime).getTime(),
-                  emoji: emojis[random],
-                })
-              } catch (e) {
-                console.error('Error adding document: ', e)
-              }
-            }
-          })
-        } catch (e) {
-          console.log('runTransaction Auth failed: ', e)
-        }
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log('----------------', errorCode, errorMessage)
-        // The email of the user's account used.
-        // const email = error.customData.email
-        // The AuthCredential type that was used.
-        // const credential = GithubAuthProvider.credentialFromError(error)
-        // ...
-      })
-  }
+  //           if (!sfDoc.exists()) {
+  //             try {
+  //               await setDoc(docRef, {
+  //                 uid: user.uid,
+  //                 displayName: user.displayName,
+  //                 email: user.email,
+  //                 password: null,
+  //                 photoURL: user.photoURL,
+  //                 friends: [],
+  //                 groups: [],
+  //                 images: [],
+  //                 music: [],
+  //                 bookmarks: [],
+  //                 createdAt:
+  //                   user.metadata.creationTime &&
+  //                   +new Date(user.metadata.creationTime).getTime(),
+  //                 emoji: emojis[random],
+  //               })
+  //             } catch (e) {
+  //               console.error('Error adding document: ', e)
+  //             }
+  //           }
+  //         })
+  //       } catch (e) {
+  //         console.log('runTransaction Auth failed: ', e)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // Handle Errors here.
+  //       const errorCode = error.code
+  //       const errorMessage = error.message
+  //       console.log('----------------', errorCode, errorMessage)
+  //       // The email of the user's account used.
+  //       // const email = error.customData.email
+  //       // The AuthCredential type that was used.
+  //       // const credential = GithubAuthProvider.credentialFromError(error)
+  //       // ...
+  //     })
+  // }
 
-  const handleFacebookLogin = () => {
-    const random = Math.floor(Math.random() * emojis.length)
+  // const handleFacebookLogin = () => {
+  //   const random = Math.floor(Math.random() * emojis.length)
 
-    signInWithPopup(ga, fProvider)
-      .then(async (result) => {
-        // // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // const credential = FacebookAuthProvider.credentialFromResult(result)
-        // const token = credential?.accessToken
-        // // The signed-in user info.
-        const user = result.user
-        const docRef = doc(db, 'users', user.uid)
+  //   signInWithPopup(ga, fProvider)
+  //     .then(async (result) => {
+  //       // // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+  //       // const credential = FacebookAuthProvider.credentialFromResult(result)
+  //       // const token = credential?.accessToken
+  //       // // The signed-in user info.
+  //       const user = result.user
+  //       const docRef = doc(db, 'users', user.uid)
 
-        try {
-          await runTransaction(db, async (transaction) => {
-            const sfDoc = await transaction.get(docRef)
+  //       try {
+  //         await runTransaction(db, async (transaction) => {
+  //           const sfDoc = await transaction.get(docRef)
 
-            if (!sfDoc.exists()) {
-              try {
-                await setDoc(docRef, {
-                  uid: user.uid,
-                  displayName: user.displayName,
-                  email: user.email,
-                  password: null,
-                  photoURL: user.photoURL,
-                  friends: [],
-                  groups: [],
-                  images: [],
-                  music: [],
-                  bookmarks: [],
-                  createdAt:
-                    user.metadata.creationTime &&
-                    +new Date(user.metadata.creationTime).getTime(),
-                  emoji: emojis[random],
-                })
-              } catch (e) {
-                console.error('Error adding document: ', e)
-              }
-            }
-          })
-        } catch (e) {
-          console.log('runTransaction Auth failed: ', e)
-        }
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log('----------------', errorCode, errorMessage)
-        // The email of the user's account used.
-        // const email = error.customData.email
-        // The AuthCredential type that was used.
-        // const credential = FacebookAuthProvider.credentialFromError(error)
-        // ...
-      })
-  }
+  //           if (!sfDoc.exists()) {
+  //             try {
+  //               await setDoc(docRef, {
+  //                 uid: user.uid,
+  //                 displayName: user.displayName,
+  //                 email: user.email,
+  //                 password: null,
+  //                 photoURL: user.photoURL,
+  //                 friends: [],
+  //                 groups: [],
+  //                 images: [],
+  //                 music: [],
+  //                 bookmarks: [],
+  //                 createdAt:
+  //                   user.metadata.creationTime &&
+  //                   +new Date(user.metadata.creationTime).getTime(),
+  //                 emoji: emojis[random],
+  //               })
+  //             } catch (e) {
+  //               console.error('Error adding document: ', e)
+  //             }
+  //           }
+  //         })
+  //       } catch (e) {
+  //         console.log('runTransaction Auth failed: ', e)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // Handle Errors here.
+  //       const errorCode = error.code
+  //       const errorMessage = error.message
+  //       console.log('----------------', errorCode, errorMessage)
+  //       // The email of the user's account used.
+  //       // const email = error.customData.email
+  //       // The AuthCredential type that was used.
+  //       // const credential = FacebookAuthProvider.credentialFromError(error)
+  //       // ...
+  //     })
+  // }
 
   return (
     <Box sx={{ my: 2 }}>
@@ -356,7 +357,7 @@ export const Auth: FC = () => {
       ></BackgroundPaperBox>
       <Box display="flex" alignItems="center" justifyContent="center">
         <img
-          src={`${process.env.PUBLIC_URL}/assets/images/logo7.png`}
+          src={`${process.env.PUBLIC_URL}/assets/images/logoappledrip.png`}
           alt="Apple Drip"
           height="150px"
           width="150px"
@@ -469,7 +470,7 @@ export const Auth: FC = () => {
             >
               <Google fontSize="large" />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               onClick={handleGithubLogin}
               color="primary"
               size="large"
@@ -486,7 +487,7 @@ export const Auth: FC = () => {
               sx={{ width: '60px ', height: '60px' }}
             >
               <Facebook fontSize="large" />
-            </IconButton>
+            </IconButton> */}
           </Stack>
           <Stack
             direction="row"
@@ -550,8 +551,8 @@ export const Auth: FC = () => {
                   invalidEmail
                     ? t('error3')
                     : alreadyInUseEmail
-                    ? t('error4')
-                    : ' '
+                      ? t('error4')
+                      : ' '
                 }
               />
               <ThemeTextFieldAuth

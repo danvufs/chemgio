@@ -12,7 +12,7 @@ export const About: FC = () => {
     <BorderBox sx={{ p: 3, mb: 2 }}>
       <Box display="flex" alignItems="center" justifyContent="center">
         <img
-          src="/assets/images/logo7.png"
+          src="/assets/images/logoappledrip.png"
           alt="Apple Drip"
           height="150px"
           width="150px"

@@ -223,7 +223,7 @@ export const Header: FC = () => {
                   sx={{ height: '65px', ml: 1 }}
                 >
                   <img
-                    src="/assets/images/logo7.png"
+                    src="/assets/images/logoappledrip.png"
                     alt="Apple Drip"
                     height="50px"
                     width="50px"
