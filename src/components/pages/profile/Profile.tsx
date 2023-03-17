@@ -31,7 +31,7 @@ export const Profile: FC = () => {
   const user = users.find((user: IUser) => user.uid === profileId)
   const userPosts = posts.filter((post: IPost) => post.author.uid === profileId)
 
-  document.title = user?.displayName || 'Seven'
+  document.title = user?.displayName || 'Apple Drip'
 
   return (
     <>
