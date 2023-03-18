@@ -10,33 +10,37 @@ import {
   Divider,
 } from '@mui/material'
 import {
+  // Firebase authentication functions
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
   signInWithPopup,
 } from 'firebase/auth'
-import { useAuth } from '../../providers/useAuth'
-import { IUserData } from '../../../types'
-import { doc, runTransaction, setDoc } from 'firebase/firestore'
+import { useAuth } from '../../providers/useAuth' // Custom Firebase authentication provider
+import { IUserData } from '../../../types' // Interface for user data
+import { doc, runTransaction, setDoc } from 'firebase/firestore' // Firestore database functions
 import {
+  // Third-party authentication providers
   //Facebook,
   //GitHub,
   Google,
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material'
-import { emojis } from './emojis'
-import { ThemeTextFieldAuth } from '../../ui/ThemeTextField'
-import { ThemeButton } from '../../ui/ThemeButton'
-import { BackgroundPaperBox } from '../../ui/ThemeBox'
-import { useTranslation } from 'react-i18next'
+import { emojis } from './emojis' // Array of emojis to randomly assign to new users
+import { ThemeTextFieldAuth } from '../../ui/ThemeTextField' // Custom text field component
+import { ThemeButton } from '../../ui/ThemeButton' // Custom button component
+import { BackgroundPaperBox } from '../../ui/ThemeBox' // Custom box component
+import { useTranslation } from 'react-i18next' // Internationalization library
 
+// Interface for the TabPanel component props
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
   value: number
 }
 
+// Component to render a single tab panel
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props
 
@@ -64,13 +68,15 @@ const a11yProps = (index: number) => {
   }
 }
 
+// Main authentication component
 export const Auth: FC = () => {
-  const { t } = useTranslation(['auth'])
+  const { t } = useTranslation(['auth']) // Hook to retrieve localized strings
   document.title = 'Apple Drip'
 
-  const { ga, db, gProvider } = useAuth()
+  const { ga, db, gProvider } = useAuth() // Firebase authentication and database objects
   //const { ga, db, gProvider, gitProvider, fProvider } = useAuth()
 
+  // State hooks to manage form state and error messages
   const [isRegForm, setIsRegForm] = useState(false)
   const [userData, setUserData] = useState<IUserData>({
     displayName: '',
@@ -78,6 +84,7 @@ export const Auth: FC = () => {
     password: '',
     photoURL: '',
   })
+
 
   const [invalidEmail, setInvalidEmail] = useState(false)
   const [alreadyInUseEmail, setAlreadyInUseEmail] = useState(false)
@@ -89,7 +96,7 @@ export const Auth: FC = () => {
   const [value, setValue] = useState(0)
 
   const [showPassword, setShowPassword] = useState(false)
-
+  // Handler for tab change
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
     setInvalidEmail(false)
@@ -104,21 +111,23 @@ export const Auth: FC = () => {
       photoURL: '',
     })
   }
-
+  // Handler for toggling password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show)
-
+  // Handler to prevent default behavior on password toggle click
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
   }
 
+  // Handler for form submission
   const handleLogin = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const random = Math.floor(Math.random() * emojis.length)
 
     if (isRegForm) {
+      // Register a new user
       await createUserWithEmailAndPassword(
         ga,
         userData.email,
@@ -126,13 +135,14 @@ export const Auth: FC = () => {
       )
         .then(async (userCredential) => {
           // console.log('REGISTERED', userCredential)
+          // Update user profile with display name
           const user = userCredential.user
 
           await updateProfile(user, {
             displayName: userData.displayName,
           })
           // console.log('User profile updated', user)
-
+          // Add new user data to Firestore database
           try {
             await setDoc(doc(db, 'users', user.uid), {
               uid: user.uid,
@@ -155,12 +165,14 @@ export const Auth: FC = () => {
           }
         })
         .catch((error) => {
+          // Handle registration errors
           error.code === 'auth/invalid-email' && setInvalidEmail(true)
           error.code === 'auth/email-already-in-use' &&
             setAlreadyInUseEmail(true)
           error.code === 'auth/weak-password' && setInvalidPassword(true)
         })
     } else {
+      // Sign in an existing user
       await signInWithEmailAndPassword(ga, userData.email, userData.password)
         .then((userCredential) => {
           // Signed in
@@ -168,12 +180,13 @@ export const Auth: FC = () => {
           // ...
         })
         .catch((error) => {
+          // Handle login errors
           error.code === 'auth/user-not-found' && setUserNotFound(true)
           error.code === 'auth/wrong-password' && setWrongPassword(true)
         })
     }
   }
-
+  // Handler for Google authentication
   const handleGoogleLogin = () => {
     const random = Math.floor(Math.random() * emojis.length)
 
@@ -189,7 +202,7 @@ export const Auth: FC = () => {
         try {
           await runTransaction(db, async (transaction) => {
             const sfDoc = await transaction.get(docRef)
-
+            // Add new user data to Firestore database if user doesn't already exist
             if (!sfDoc.exists()) {
               try {
                 await setDoc(docRef, {

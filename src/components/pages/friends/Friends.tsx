@@ -1,3 +1,4 @@
+// Importing necessary modules
 import { FC } from 'react'
 import { Stack, Typography } from '@mui/material'
 import { useAuth } from '../../providers/useAuth'
@@ -8,15 +9,18 @@ import { useTranslation } from 'react-i18next'
 import { ThemeOnlineBadge } from '../../ui/ThemeOnlineBadge'
 import { useAppSelector } from '../../../hooks/redux'
 
+// Creating a functional component named "Friends"
 export const Friends: FC = () => {
+  // Initializing i18n translation hook and updating document title
   const { t } = useTranslation(['friends'])
   document.title = t('title1')
-
+  // Accessing the usersRdb state variable from the useAuth provider
   const { usersRdb } = useAuth()
-
+  // Accessing the friends state variable from Redux store
   const { friends } = useAppSelector((state) => state.user)
+  // Accessing the users state variable from Redux store
   const { users } = useAppSelector((state) => state.users)
-
+  // Rendering the component with BorderBox, Stack, Link, Typography, ThemeOnlineBadge, ThemeAvatar components
   return (
     <>
       <BorderBox sx={{ p: 3, mb: 2 }}>

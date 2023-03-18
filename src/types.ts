@@ -1,6 +1,8 @@
-import { SvgIconTypeMap } from '@mui/material'
-import { OverridableComponent } from '@mui/material/OverridableComponent'
+// Importing necessary dependencies and components
+import { SvgIconTypeMap } from '@mui/material'  // A type definition for SVG icons used in the application
+import { OverridableComponent } from '@mui/material/OverridableComponent'  // A component used for creating custom components that can override MUI components
 
+// Defining interface types for various data used in the application
 export interface IUser {
   bookmarks: IPost[]
   createdAt: string
@@ -68,5 +70,5 @@ export interface IComment {
 
 export interface IMenuItem {
   link: string
-  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & { muiName: string }
+  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & { muiName: string }  // An interface for menu items, which includes a link and an icon
 }

@@ -1,3 +1,4 @@
+// Importing necessary modules
 import { FC } from 'react'
 import { Chip, Stack, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
@@ -9,19 +10,22 @@ import {
 } from '@mui/icons-material'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { bookmarksSlice } from '../../../store/reducers/BookmarksSlice'
-
+// Creating a functional component named "BookmarksOrderBy"
 export const BookmarksOrderBy: FC = () => {
+  // Initializing i18n translation hook
   const { t } = useTranslation(['other'])
-
+  // Accessing the sortBookmarksBy state variable from Redux store
   const { sortBookmarksBy } = useAppSelector((state) => state.bookmarks)
+  // Extracting Redux actions for setting bookmarks by newest, oldest, popularity, and controversial
   const {
     setBookmarksByNewest,
     setBookmarksByOldest,
     setBookmarksByPopularity,
     setBookmarksByControversial,
   } = bookmarksSlice.actions
+  // Initializing Redux dispatch hook
   const dispatch = useAppDispatch()
-
+  // Creating event handlers for sorting bookmarks by newest, oldest, popularity, and controversial
   const handleSortBookmarksByNewest = () => {
     dispatch(setBookmarksByNewest())
   }
@@ -37,7 +41,7 @@ export const BookmarksOrderBy: FC = () => {
   const handleSortBookmarksByControversial = () => {
     dispatch(setBookmarksByControversial())
   }
-
+  // Rendering the component with Stack, Typography, and Chip components
   return (
     <Stack
       alignItems="center"

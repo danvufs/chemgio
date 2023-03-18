@@ -1,3 +1,4 @@
+// Import necessary modules from various libraries
 import { FC } from 'react'
 import { menu } from './menuList'
 import {
@@ -33,19 +34,26 @@ import { usersSlice } from '../../../../store/reducers/UsersSlice'
 import { postsSlice } from '../../../../store/reducers/PostsSlice'
 import { bookmarksSlice } from '../../../../store/reducers/BookmarksSlice'
 
+// Define a React functional component named `Menu` using the `FC` type from React.
 export const Menu: FC = () => {
+  // Use `useTranslation` hook to access the `t` function for localization
   const { t } = useTranslation(['menu'])
+  // Use `useAuth` hook to access Firebase authentication and real-time database
   const { ga, rdb } = useAuth()
+  // Use `useNavigate` hook to handle navigation within the application
   const navigate = useNavigate()
 
+  // Use `useAppSelector` hook to access the `uid` and `bookmarks` states from the Redux store
   const { uid, bookmarks } = useAppSelector((state) => state.user)
+  // Use `useAppDispatch` hook to dispatch actions to update the Redux store
   const { removeUser } = userSlice.actions
   const { removeUsers } = usersSlice.actions
   const { removePosts } = postsSlice.actions
   const { removeBookmarks } = bookmarksSlice.actions
   const dispatch = useAppDispatch()
-
+  // Define a `handleLogout` function that logs out the current user
   const handleLogout = () => {
+    // Update the user's status to "offline" in the Firebase database
     const isOnlineRef = ref(rdb, `users/${uid}/isOnline`)
     const lastOnlineRef = ref(rdb, `users/${uid}/lastOnline`)
     const connectedRef = ref(rdb, '.info/connected')
@@ -59,14 +67,18 @@ export const Menu: FC = () => {
       }
     })
 
+    // Sign out the user using Firebase authentication
     signOut(ga)
+    // Reset the Redux store by dispatching several actions
     dispatch(removeUser())
     dispatch(removeUsers())
     dispatch(removePosts())
     dispatch(removeBookmarks())
+    // Navigate to the home page
     navigate('/')
   }
 
+  // Render the navigation menu
   return (
     <BorderBox>
       <nav>

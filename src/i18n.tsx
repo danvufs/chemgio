@@ -1,7 +1,9 @@
+// Import the necessary modules and files
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import store from './store/store'
 
+// Import the translation files for English and Vietnamese
 import translationEnAbout from './translation/en/about.json'
 import translationEnAuth from './translation/en/auth.json'
 import translationEnBookmarks from './translation/en/bookmarks.json'
@@ -24,6 +26,7 @@ import translationVnMenu from './translation/vn/menu.json'
 import translationVnOther from './translation/vn/other.json'
 import translationVnEmojiPicker from './translation/vn/emojiPicker.json'
 
+// Define the translation resources for both languages
 const resources = {
   en: {
     about: translationEnAbout,
@@ -51,6 +54,7 @@ const resources = {
   },
 }
 
+// Define a function to initialize i18next with the current language
 export const initI18next = () => {
   const lng = store.getState().global.language
 

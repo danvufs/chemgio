@@ -1,3 +1,4 @@
+// Import necessary modules from various libraries
 import { FC } from 'react'
 import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { Link } from 'react-router-dom'
@@ -7,20 +8,21 @@ import { ThemeOnlineBadge } from '../../ui/ThemeOnlineBadge'
 import { ThemeAvatar } from '../../ui/ThemeAvatar'
 import { useAppSelector } from '../../../hooks/redux'
 
-
-
+// Define a React functional component named `UsersOnline` using the `FC` type from React.
 export const UsersOnline: FC = () => {
   const theme = useTheme() // Call useTheme to get the theme object
-  const { usersRdb } = useAuth()
+  const { usersRdb } = useAuth() // Get the `usersRdb` object from the `useAuth` hook
 
-  const { users } = useAppSelector((state) => state.users)
+  const { users } = useAppSelector((state) => state.users) // Get the `users` object from the Redux store
 
-  const usersRdbList = Object.values(usersRdb)
+  const usersRdbList = Object.values(usersRdb) // Get an array of values from the `usersRdb` object
 
+  // Filter the `usersRdb` array to get only online users
   const onlineUsersList = Object.values(usersRdb).filter(
     (user: any) => user.isOnline === true
   )
 
+  // Render the component
   return (
     <BorderBox sx={{ mt: 2, p: 2 }}>
       <Typography

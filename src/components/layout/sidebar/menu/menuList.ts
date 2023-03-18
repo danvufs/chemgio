@@ -1,10 +1,14 @@
+// Import all the icons from the `@mui/icons-material` library
 import * as Icons from '@mui/icons-material'
+
+// Import the `IMenuItem` type from the `../../../../types` module
 import { IMenuItem } from '../../../../types'
 
+// Define an array of menu items, each with a link and an icon
 export const menu: IMenuItem[] = [
   {
     link: '/',
-    icon: Icons.Article,
+    icon: Icons.Article, // Use the `Article` icon from `@mui/icons-material`
   },
   // {
   //   link: '/messenger',
@@ -12,7 +16,7 @@ export const menu: IMenuItem[] = [
   // },
   {
     link: '/friends',
-    icon: Icons.Group,
+    icon: Icons.Group, // Use the `Group` icon from `@mui/icons-material`
   },
   // {
   //   link: '/groups',

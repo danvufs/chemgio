@@ -1,6 +1,8 @@
+// Import necessary Redux toolkit functions and types
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUser, IUserState } from '../../types'
 
+// Define initial state for the user slice
 const initialState = {
   bookmarks: null,
   createdAt: null,
@@ -15,10 +17,12 @@ const initialState = {
   isAuth: false,
 } as IUserState
 
+// Create the user slice
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    // Set user data from Firebase
     setUser(state, action: PayloadAction<IUser>) {
       state.bookmarks = action.payload.bookmarks
       state.createdAt = action.payload.createdAt
@@ -32,6 +36,7 @@ export const userSlice = createSlice({
       state.uid = action.payload.uid
       state.isAuth = action.payload.isAuth
     },
+    // Remove all user data
     removeUser(state) {
       state.bookmarks = null
       state.createdAt = null
@@ -48,4 +53,5 @@ export const userSlice = createSlice({
   },
 })
 
+// Export the reducer for the user slice
 export default userSlice.reducer

@@ -1,3 +1,4 @@
+// Importing necessary dependencies and components
 import { FC, useEffect, useState } from 'react'
 import {
   AppBar,
@@ -40,7 +41,9 @@ import { usersSlice } from '../../../store/reducers/UsersSlice'
 import { postsSlice } from '../../../store/reducers/PostsSlice'
 import { bookmarksSlice } from '../../../store/reducers/BookmarksSlice'
 
+// Defining the Header component
 export const Header: FC = () => {
+  // Initializing necessary variables and states
   const { t, i18n } = useTranslation(['menu'])
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -58,48 +61,53 @@ export const Header: FC = () => {
   const { removeBookmarks } = bookmarksSlice.actions
   const dispatch = useAppDispatch()
 
+  // Handler function for opening the menu
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)
   }
 
+  // Handler function for closing the menu
   const handleClose = () => {
     setAnchorEl(null)
   }
 
+  // Update the moment.js locale based on the selected language
   useEffect(() => {
     i18n.changeLanguage(language)
 
     language === 'en'
       ? moment.updateLocale('en', {
-          calendar: {
-            lastDay: '[yesterday at] H:mm',
-            sameDay: '[today at] H:mm',
-            nextDay: '[tomorrow at] H:mm',
-            lastWeek: 'D MMM [at] H:mm',
-            nextWeek: 'D MMM [at] H:mm',
-            sameElse: 'D MMM YYYY',
-          },
-        })
+        calendar: {
+          lastDay: '[yesterday at] H:mm',
+          sameDay: '[today at] H:mm',
+          nextDay: '[tomorrow at] H:mm',
+          lastWeek: 'D MMM [at] H:mm',
+          nextWeek: 'D MMM [at] H:mm',
+          sameElse: 'D MMM YYYY',
+        },
+      })
       : moment.updateLocale('vn', {
-          monthsShort: 'Một_Hai_Ba_Tư_Năm_Sáu_Bẩy_Tám_Chín_Mười_Mười Một_Mười Hai'.split(
-            '_'
-          ),
-          calendar: {
-            lastDay: '[hôm qua lúc] H:mm',
-            sameDay: '[hôm nay lúc] H:mm',
-            nextDay: '[ngày mai lúc] H:mm',
-            lastWeek: 'D MMM [lúc] H:mm',
-            nextWeek: 'D MMM [lúc] H:mm',
-            sameElse: 'D MMM YYYY',
-          },
-        })
+        monthsShort: 'Một_Hai_Ba_Tư_Năm_Sáu_Bẩy_Tám_Chín_Mười_Mười Một_Mười Hai'.split(
+          '_'
+        ),
+        calendar: {
+          lastDay: '[hôm qua lúc] H:mm',
+          sameDay: '[hôm nay lúc] H:mm',
+          nextDay: '[ngày mai lúc] H:mm',
+          lastWeek: 'D MMM [lúc] H:mm',
+          nextWeek: 'D MMM [lúc] H:mm',
+          sameElse: 'D MMM YYYY',
+        },
+      })
     // eslint-disable-next-line
   }, [language])
 
+  // Handler function for changing language
   const handleChangeLanguage = () => {
     language === 'vn' ? dispatch(setLangEN()) : dispatch(setLangVN())
   }
 
+  // Handler function for logging out
   const handleLogout = () => {
     const isOnlineRef = ref(rdb, `users/${uid}/isOnline`)
     const lastOnlineRef = ref(rdb, `users/${uid}/lastOnline`)
@@ -123,6 +131,7 @@ export const Header: FC = () => {
     navigate('/')
   }
 
+  // return the Header component
   return (
     <Box component="header">
       <AppBar
