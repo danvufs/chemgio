@@ -375,12 +375,12 @@ export const Bookmarks: FC = () => {
               setDeletedPosts={setDeletedPosts}
             /> */}
                 </Stack>
-<!--                 <Typography
+{/* <Typography
                   variant="body1"
                   sx={{ ml: 1, wordBreak: 'break-word' }}
                 >
                   {post.content}
-                </Typography> -->
+                </Typography> */}
                 <div
                   dangerouslySetInnerHTML={{ __html: post.content }}
                   className="correct-display"
